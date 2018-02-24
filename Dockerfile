@@ -1,15 +1,14 @@
-FROM node:8
+FROM node:8-alpine
 
-MAINTAINER minamo <minamo173dev@gmail.com>
+LABEL maintainer="minamo173dev@gmail.com"
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update \
-    && apt-get upgrade -y \
-    && apt-get install -y --no-install-recommends \
-        build-essential g++ python2.7 python2.7-dev unzip curl \
-    && rm -rf /var/lib/apt/lists/* \
-    && mkdir -p /tmp \
-    && cd /tmp \
-    && curl -O https://bootstrap.pypa.io/get-pip.py \
-    && python get-pip.py \
-    && pip install awscli \
-    && rm -f /tmp/get-pip.py
+RUN apk -v --update add \
+        python \
+        py-pip \
+        groff \
+        less \
+        mailcap \
+        && \
+    pip install --upgrade awscli && \
+    apk -v --purge del py-pip && \
+    rm /var/cache/apk/*
