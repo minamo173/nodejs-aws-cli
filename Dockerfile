@@ -9,6 +9,7 @@ RUN apk -v --update add \
         less \
         mailcap \
         && \
+    pip install --upgrade pip && \
     pip install --upgrade awscli && \
     apk -v --purge del py-pip && \
     rm /var/cache/apk/*
